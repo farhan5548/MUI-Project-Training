@@ -1,0 +1,332 @@
+// React + TypeScript + MUI + Redux + Router
+// Mini E-Commerce Store Starter Template
+// All files are .tsx and fully typed
+
+// ============================
+// src/main.tsx (Vite style)
+// ============================
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import store from "./store/store";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
+);
+
+// ============================
+// src/types/Product.ts
+// ============================
+export interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  img?: string;
+}
+
+// ============================
+// src/theme/theme.ts
+// ============================
+import { createTheme } from "@mui/material";
+
+export const getTheme = (mode: "light" | "dark") =>
+  createTheme({
+    palette: { mode },
+  });
+
+// ============================
+// src/store/store.ts
+// ============================
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./slices/cartSlice";
+import productsReducer from "./slices/productsSlice";
+import themeReducer from "./slices/themeSlice";
+
+const store = configureStore({
+  reducer: {
+    cart: cartReducer,
+    products: productsReducer,
+    theme: themeReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export default store;
+
+// ============================
+// src/store/slices/themeSlice.ts
+// ============================
+import { createSlice } from "@reduxjs/toolkit";
+
+type ThemeState = { mode: "light" | "dark" };
+
+const initialState: ThemeState = {
+  mode: "light",
+};
+
+const themeSlice = createSlice({
+  name: "theme",
+  initialState,
+  reducers: {
+    toggleTheme: (state) => {
+      state.mode = state.mode === "light" ? "dark" : "light";
+    },
+  },
+});
+
+export const { toggleTheme } = themeSlice.actions;
+export default themeSlice.reducer;
+
+// ============================
+// src/store/slices/cartSlice.ts
+// ============================
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Product } from "../../types/Product";
+
+type CartState = {
+  items: Product[];
+};
+
+const initialState: CartState = {
+  items: [],
+};
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action: PayloadAction<Product>) => {
+      state.items.push(action.payload);
+    },
+
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter((p) => p.id !== action.payload);
+    },
+  },
+});
+
+export const { addToCart, removeFromCart } = cartSlice.actions;
+export default cartSlice.reducer;
+
+// ============================
+// src/store/slices/productsSlice.ts
+// ============================
+import { createSlice } from "@reduxjs/toolkit";
+import { Product } from "../../types/Product";
+
+type ProductsState = {
+  list: Product[];
+};
+
+const initialState: ProductsState = {
+  list: [
+    { id: 1, title: "Phone", price: 699, description: "Nice phone" },
+    { id: 2, title: "Laptop", price: 1299, description: "Fast laptop" },
+    { id: 3, title: "Headphones", price: 199, description: "Great sound" },
+  ],
+};
+
+const productsSlice = createSlice({
+  name: "products",
+  initialState,
+  reducers: {},
+});
+
+export default productsSlice.reducer;
+
+// ============================
+// src/hooks.ts
+// ============================
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "./store/store";
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// ============================
+// src/App.tsx
+// ============================
+import { Routes, Route } from "react-router-dom";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
+import { useAppSelector } from "./hooks";
+import { getTheme } from "./theme/theme";
+
+export default function App() {
+  const mode = useAppSelector((state) => state.theme.mode);
+  const theme = getTheme(mode);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </ThemeProvider>
+  );
+}
+
+// ============================
+// src/components/Navbar.tsx
+// ============================
+import { AppBar, Toolbar, Typography, IconButton, Badge } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { toggleTheme } from "../store/slices/themeSlice";
+
+export default function Navbar() {
+  const cart = useAppSelector((state) => state.cart.items);
+  const dispatch = useAppDispatch();
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component={Link}
+          to="/"
+          style={{ flexGrow: 1, color: "#fff", textDecoration: "none" }}
+        >
+          MiniStore
+        </Typography>
+
+        <IconButton color="inherit" onClick={() => dispatch(toggleTheme())}>
+          <Brightness4Icon />
+        </IconButton>
+
+        <IconButton component={Link} to="/cart" color="inherit">
+          <Badge badgeContent={cart.length} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+// ============================
+// src/pages/Home.tsx
+// ============================
+import { Container, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+
+export default function Home() {
+  return (
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4">Welcome to MiniStore</Typography>
+      <Button variant="contained" sx={{ mt: 2 }} component={Link} to="/products">
+        Shop Now
+      </Button>
+    </Container>
+  );
+}
+
+// ============================
+// src/pages/Products.tsx
+// ============================
+import { Grid, Card, CardContent, CardActions, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../hooks";
+
+export default function Products() {
+  const products = useAppSelector((state) => state.products.list);
+
+  return (
+    <Grid container spacing={3} sx={{ p: 3 }}>
+      {products.map((p) => (
+        <Grid item xs={12} sm={6} md={4} key={p.id}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">{p.title}</Typography>
+              <Typography>${p.price}</Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" component={Link} to={`/products/${p.id}`}>
+                View
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
+  );
+}
+
+// ============================
+// src/pages/ProductDetail.tsx
+// ============================
+import { useParams } from "react-router-dom";
+import { Container, Button, Typography } from "@mui/material";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { addToCart } from "../store/slices/cartSlice";
+
+export default function ProductDetail() {
+  const { id } = useParams();
+  const product = useAppSelector((state) =>
+    state.products.list.find((p) => p.id === Number(id))
+  );
+  const dispatch = useAppDispatch();
+
+  if (!product) return <Typography>Product not found</Typography>;
+
+  return (
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4">{product.title}</Typography>
+      <Typography variant="h6">${product.price}</Typography>
+      <Typography sx={{ mt: 2 }}>{product.description}</Typography>
+      <Button variant="contained" sx={{ mt: 3 }} onClick={() => dispatch(addToCart(product))}>
+        Add to Cart
+      </Button>
+    </Container>
+  );
+}
+
+// ============================
+// src/pages/Cart.tsx
+// ============================
+import { Container, Button, Typography } from "@mui/material";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { removeFromCart } from "../store/slices/cartSlice";
+
+export default function Cart() {
+  const cart = useAppSelector((state) => state.cart.items);
+  const dispatch = useAppDispatch();
+
+  return (
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4">Your Cart</Typography>
+
+      {cart.length === 0 && <Typography sx={{ mt: 3 }}>Cart is empty</Typography>}
+
+      {cart.map((item) => (
+        <div key={item.id} style={{ marginTop: "20px" }}>
+          <Typography variant="h6">{item.title}</Typography>
+          <Typography>${item.price}</Typography>
+          <Button variant="outlined" sx={{ mt: 1 }} onClick={() => dispatch(removeFromCart(item.id))}}>
+            Remove
+          </Button>
+        </div>
+      ))}
+    </Container>
+  );
+}
