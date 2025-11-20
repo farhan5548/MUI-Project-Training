@@ -1,5 +1,5 @@
 // import lambo from "../assets/lambo.jpg";
-import { Autocomplete, TextField, Box, Button } from "@mui/material";
+import { Autocomplete, TextField, Box, Button, Grid } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -111,6 +111,14 @@ function Sample() {
 
       <Box component="section" sx={{ p: 2, border: "1px dashed grey" }}>
         This Box renders as an HTML section element.
+      </Box>
+
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid size={8}>
+            <p></p>
+          </Grid>
+        </Grid>
       </Box>
     </div>
   );
