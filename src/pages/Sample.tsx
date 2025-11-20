@@ -1,3 +1,4 @@
+// import lambo from "../assets/lambo.jpg";
 import { Autocomplete, TextField, Box, Button } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import Radio from "@mui/material/Radio";
@@ -20,23 +21,28 @@ function Sample() {
     //     height: "100vh",
     //   }}
     // >
+    // <div style={{ backgroundImage: `url(${lambo})`,
+    //   height:"100vh",
+    //   width:"100vw"
+    //  }}>
     <div>
       <h1>This is the Page for Practice Material-UI</h1>
       <Box
-       sx={{
+        sx={{
           border: "1px solid black",
           borderRadius: "8px",
           paddingX: "12px",
-          paddingY:"10px",
+          paddingY: "10px",
           margin: "15px",
-        }}>
+        }}
+      >
         <p>See the Portfolio</p>
         <Button
           href="https://personal-portfolio-responsive.netlify.app/"
           size="small"
           sx={{
             color: "blue",
-            border: "1px solid black"
+            border: "1px solid black",
           }}
           endIcon={<LaunchIcon />}
         >
