@@ -29,19 +29,34 @@ function Sample() {
       <h1>This is the Page for Practice Material-UI</h1>
       <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "125px",
+          width: "225px",
           border: "1px solid black",
           borderRadius: "8px",
           paddingX: "12px",
           paddingY: "10px",
           margin: "15px",
+          bgcolor: "yellow",
         }}
       >
-        <p>See the Portfolio</p>
+        <p
+          style={{
+            color: "blue",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
+          See the Portfolio
+        </p>
         <Button
           href="https://personal-portfolio-responsive.netlify.app/"
-          size="small"
           sx={{
-            color: "blue",
+            padding: "5px",
+            color: "white",
+            bgcolor: "black",
             border: "1px solid black",
           }}
           endIcon={<LaunchIcon />}
@@ -92,6 +107,10 @@ function Sample() {
         <TextField id="outlined-basic" label="Outlined" variant="outlined" />
         <TextField id="filled-basic" label="Filled" variant="filled" />
         <TextField id="standard-basic" label="Standard" variant="standard" />
+      </Box>
+
+      <Box component="section" sx={{ p: 2, border: "1px dashed grey" }}>
+        This Box renders as an HTML section element.
       </Box>
     </div>
   );
