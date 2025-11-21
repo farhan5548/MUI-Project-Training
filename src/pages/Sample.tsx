@@ -1,4 +1,13 @@
-import { Autocomplete, TextField, Box, Button, Grid } from "@mui/material";
+import {
+  Autocomplete,
+  TextField,
+  Box,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  Divider,
+} from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -14,6 +23,7 @@ import Typography from "@mui/material/Typography";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
+import Chip from "@mui/material/Chip";
 import lambo from "../assets/lambo.jpg";
 import lamboo from "../assets/lamboo.jpg";
 import black_lambo from "../assets/black_lambo.jpg";
@@ -34,7 +44,6 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 
 function Sample() {
   const options = ["Option 1", "Option 2", "Option 3"];
-
   return (
     // <div
     //   style={{
@@ -416,6 +425,58 @@ function Sample() {
         <Avatar src={GTR} alt="GTR" sx={{ width: 48, height: 48 }} />
         <Avatar src={black_lambo} alt="Lambo" sx={{ width: 48, height: 48 }} />
       </AvatarGroup>
+
+      <Stack spacing={1} sx={{ alignItems: "center" }}>
+        <Stack direction="row" spacing={1}>
+          <Chip label="primary" color="primary" />
+          <Chip label="success" color="success" />
+        </Stack>
+        <Stack direction="row" spacing={1}>
+          <Chip label="primary" color="primary" variant="outlined" />
+          <Chip label="success" color="success" variant="outlined" />
+        </Stack>
+      </Stack>
+      <Chip
+        sx={{ bgcolor: "violet" }}
+        avatar={<Avatar sx={{ bgcolor: "yellow" }}>F</Avatar>}
+        label="Farhan"
+      />
+
+      <Card variant="outlined" sx={{ maxWidth: 360, marginY: "20px" }}>
+        <CardContent>
+          <Stack
+            direction={"row"}
+            sx={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              p: "3px",
+            }}
+          >
+            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+              Toothbrush
+            </Typography>
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              $4.50
+            </Typography>
+          </Stack>
+          <Typography
+            variant="body2"
+            sx={{ padding: 2, color: "text.secondary" }}
+          >
+            Pinstriped cornflower blue cotton blouse takes you on a walk to the
+            park or just down the hall.
+          </Typography>
+          <Divider />
+        </CardContent>
+        <Box sx={{ p: 2 }}>
+          <Typography variant="body1">Select type</Typography>
+          <Stack direction={"row"} gap={5} py={2}>
+            <Chip label="Soft" size="small" />
+            <Chip label="Medium" size="small"/>
+            <Chip label="Hard" size="small"/>
+          </Stack>
+        </Box>
+      </Card>
     </div>
   );
 }
