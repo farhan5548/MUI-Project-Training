@@ -7,6 +7,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
 import Typography from "@mui/material/Typography";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -27,6 +29,7 @@ import GTR from "../assets/GTR.jpg";
 import image_131 from "../assets/image_131.jpg";
 import image_225 from "../assets/image_225.jpg";
 import image_250 from "../assets/image_250.jpg";
+import { deepOrange, deepPurple } from "@mui/material/colors";
 
 function Sample() {
   const options = ["Option 1", "Option 2", "Option 3"];
@@ -321,50 +324,11 @@ function Sample() {
         ))}
       </ImageList>
 
-      <ImageList cols={4} gap={10} variant="quilted">
-        <ImageListItem>
-          <img src={lamboo} alt="lambo" />
-        </ImageListItem>
-        <ImageListItem>
-          <img src={lamboo} alt="lambo" />
-        </ImageListItem>
-        <ImageListItem>
-          <img src={lamboo} alt="lambo" />
-        </ImageListItem>
-      </ImageList>
-
-      <ImageList cols={3} gap={8} variant="quilted">
-        {[
-          jeep,
-          lambo,
-          black_lambo,
-          black_car,
-          ferrari,
-          image_55,
-          img,
-          lamboo,
-        ].map((img, i) => (
-          <ImageListItem key={i}>
-            <img src={img} alt={`local-${i}`} loading="lazy" />
-          </ImageListItem>
-        ))}
-      </ImageList>
-
-      <ImageList variant="quilted" cols={4} rowHeight={121}>
-        <ImageListItem cols={2} rows={2}>
-          <img src={black_lambo} />
-        </ImageListItem>
-
-        <ImageListItem cols={1} rows={1}>
-          <img src={jeep} />
-        </ImageListItem>
-      </ImageList>
-
       <ImageList
         variant="quilted"
         cols={6}
         gap={8}
-        sx={{ width: 800, height: 650 }}
+        sx={{ width: 1000, height: 850 }}
       >
         {myImg.map((item) => (
           <ImageListItem
@@ -383,6 +347,54 @@ function Sample() {
           </ImageListItem>
         ))}
       </ImageList>
+
+      <ImageList cols={4} gap={10} variant="quilted">
+        <ImageListItem sx={{ borderRadius: 2, overflow: "hidden" }}>
+          <img src={Goku} alt="Kakarot" />
+        </ImageListItem>
+        <ImageListItem sx={{ borderRadius: 2, overflow: "hidden" }}>
+          <img src={Goku} alt="Kakarot" />
+        </ImageListItem>
+        <ImageListItem sx={{ borderRadius: 2, overflow: "hidden" }}>
+          <img src={Goku} alt="Kakarot" />
+        </ImageListItem>
+      </ImageList>
+
+      <Stack direction={"row"} spacing={5}>
+        {/* Images */}
+        <Avatar
+          src={Goku}
+          alt="Goku"
+          sx={{ width: 72, height: 72 }}
+          variant="square"
+        />
+        <Avatar
+          src={red_goku}
+          alt="Red-Goku"
+          sx={{ width: 72, height: 72 }}
+          variant="rounded"
+        />
+        <Avatar src={jeep} alt="JEEP" sx={{ width: 72, height: 72 }} />
+        <Avatar src={GTR} alt="GTR" sx={{ width: 72, height: 72 }} />
+        <Avatar src={black_lambo} alt="Lambo" sx={{ width: 72, height: 72 }} />
+        {/* Letter Avatars */}
+        <Avatar sx={{ width: 72, height: 72 }}>H</Avatar>
+        <Avatar sx={{ bgcolor: deepOrange[500], width: 72, height: 72 }}>
+          N
+        </Avatar>
+        <Avatar sx={{ bgcolor: deepPurple[500], width: 72, height: 72 }}>
+          OP
+        </Avatar>
+      </Stack>
+
+      {/* Avatar Groups */}
+      <AvatarGroup max={4}>
+        <Avatar src={Goku} alt="Goku" sx={{ width: 48, height: 48 }} />
+        <Avatar src={red_goku} alt="Red-Goku" sx={{ width: 48, height: 48 }} />
+        <Avatar src={jeep} alt="JEEP" sx={{ width: 48, height: 48 }} />
+        <Avatar src={GTR} alt="GTR" sx={{ width: 48, height: 48 }} />
+        <Avatar src={black_lambo} alt="Lambo" sx={{ width: 48, height: 48 }} />
+      </AvatarGroup>
     </div>
   );
 }
