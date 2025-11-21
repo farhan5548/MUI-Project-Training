@@ -9,6 +9,7 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import Badge from "@mui/material/Badge";
 import Typography from "@mui/material/Typography";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -362,18 +363,38 @@ function Sample() {
 
       <Stack direction={"row"} spacing={5}>
         {/* Images */}
-        <Avatar
-          src={Goku}
-          alt="Goku"
-          sx={{ width: 72, height: 72 }}
-          variant="square"
-        />
-        <Avatar
-          src={red_goku}
-          alt="Red-Goku"
-          sx={{ width: 72, height: 72 }}
-          variant="rounded"
-        />
+
+        <Badge
+          badgeContent={5}
+          color="error"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Avatar
+            src={Goku}
+            alt="Goku"
+            sx={{ width: 72, height: 72 }}
+            variant="square"
+          />
+        </Badge>
+
+        <Badge
+          variant="dot"
+          color="success"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Avatar
+            src={red_goku}
+            alt="Red-Goku"
+            sx={{ width: 72, height: 72 }}
+            variant="rounded"
+          />
+        </Badge>
         <Avatar src={jeep} alt="JEEP" sx={{ width: 72, height: 72 }} />
         <Avatar src={GTR} alt="GTR" sx={{ width: 72, height: 72 }} />
         <Avatar src={black_lambo} alt="Lambo" sx={{ width: 72, height: 72 }} />
